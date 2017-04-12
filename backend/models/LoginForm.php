@@ -1,12 +1,12 @@
 <?php
-namespace common\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use backend\models\UserBackend as User;
 
 /**
- * Login form
+ * 后台登录页
  */
 class LoginForm extends Model
 {
@@ -15,7 +15,6 @@ class LoginForm extends Model
     public $rememberMe = true;
 
     private $_user;
-
 
     /**
      * @inheritdoc
@@ -32,6 +31,12 @@ class LoginForm extends Model
         ];
     }
 
+    public function attributeLabels(){
+        return [
+            'rememberMe' => '记住我',
+        ];
+    }
+    
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -44,7 +49,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, '用户名或密码不正确.');
             }
         }
     }
@@ -57,7 +62,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 7 : 0);
         } else {
             return false;
         }

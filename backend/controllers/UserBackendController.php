@@ -1,19 +1,19 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
-use frontend\models\BlogForm;
-use common\models\BlogSearch;
+use backend\models\UserBackend;
+use backend\models\UserBackendSearch;
+use backend\models\SignupForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\VarDumper;
 
 /**
- * BlogController implements the CRUD actions for Blog model.
+ * UserBackendController implements the CRUD actions for UserBackend model.
  */
-class BlogController extends Controller
+class UserBackendController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +31,12 @@ class BlogController extends Controller
     }
 
     /**
-     * Lists all Blog models.
+     * Lists all UserBackend models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new BlogSearch();
+        $searchModel = new UserBackendSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +46,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Displays a single Blog model.
+     * Displays a single UserBackend model.
      * @param integer $id
      * @return mixed
      */
@@ -58,30 +58,55 @@ class BlogController extends Controller
     }
 
     /**
-     * Creates a new Blog model.
+     *  create new user
+     */
+    public function actionSignup ()
+    {
+        $model = new SignupForm();
+    
+        // 如果是post提交且有对提交的数据校验成功（我们在SignupForm的signup方法进行了实现）
+        // $model->load() 方法，实质是把post过来的数据赋值给model
+        // $model->signup() 方法, 是我们要实现的具体的添加用户操作
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            return $this->redirect(['index']);
+        }
+    
+        // 渲染添加新用户的表单
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+    
+    // 看主要的验证操作，该操作是表单字段失去焦点时异步验证，同时如果直接提交表单，也会先执行该操作进行验证
+    public function actionValidateSignupForm ($id = null) {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        //更新验证用，此处不适合
+        #$model = $id === null ? new UserBackend() : UserBackend::findOne($id);
+        $model = new SignupForm();
+        $model->load(Yii::$app->request->post());
+        return \yii\widgets\ActiveForm::validate($model);
+    }
+    
+    /**
+     * Creates a new UserBackend model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new BlogForm();
+        $model = new UserBackend();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            
-            if ($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-        
-        //VarDumper::dump($model->errors);
-        
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
-     * Updates an existing Blog model.
+     * Updates an existing UserBackend model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -100,7 +125,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Deletes an existing Blog model.
+     * Deletes an existing UserBackend model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -113,15 +138,15 @@ class BlogController extends Controller
     }
 
     /**
-     * Finds the Blog model based on its primary key value.
+     * Finds the UserBackend model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Blog the loaded model
+     * @return UserBackend the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BlogForm::findOne($id)) !== null) {
+        if (($model = UserBackend::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
