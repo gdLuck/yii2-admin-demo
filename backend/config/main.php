@@ -106,18 +106,14 @@ return [
             ],
         ],
     ],
-    //严重警告！！！as access位置在components外！！！ yii2-admin/rbac
+    //as access位置在components外！！！ yii2-admin/rbac
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             //这里是允许访问的action
             'site/captcha',
-            '*'  #初始测试用
+            //'*'  #初始测试用
         ]
-    ],
-    #添加日志记录行为
-    'as logBehavior' => [
-        'class' => 'backend\components\MyActiveRecordBehavior',
     ],
     'params' => $params,
 ];

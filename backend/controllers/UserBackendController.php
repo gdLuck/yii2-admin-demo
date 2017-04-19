@@ -3,18 +3,19 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 use backend\models\UserBackend;
 use backend\models\UserBackendSearch;
 use backend\models\SignupForm;
-use yii\web\NotFoundHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
 use backend\models\AdminLog;
+use backend\components\AdminController;
+use yii\helpers\VarDumper;
 
 /**
  * UserBackendController implements the CRUD actions for UserBackend model.
  */
-class UserBackendController extends Controller
+class UserBackendController extends AdminController
 {
     /**
      * @inheritdoc
@@ -64,12 +65,12 @@ class UserBackendController extends Controller
     public function actionSignup ()
     {
         $model = new SignupForm();
-    
+        $this->attachAdminLogBehavior($model);
         // 如果是post提交且有对提交的数据校验成功（我们在SignupForm的signup方法进行了实现）
-        // $model->load() 方法，实质是把post过来的数据赋值给model
-        // $model->signup() 方法, 是我们要实现的具体的添加用户操作
+        // $model->load() 方法，把post过来的数据赋值给model
+        // $model->signup() 方法, 要实现的具体的添加用户操作
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            yii::$app->adminLogRecord($model,AdminLog::ACTION_TYPE_SIGNUP);
+            $model->modelLogRecord($model,AdminLog::ACTION_TYPE_SIGNUP);
             return $this->redirect(['index']);
         }
         
@@ -97,9 +98,8 @@ class UserBackendController extends Controller
     public function actionCreate()
     {
         $model = new UserBackend();
-
+        $this->attachAdminLogBehavior($model);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            yii::$app->adminLogRecord($model,AdminLog::ACTION_TYPE_CREATE);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -118,7 +118,6 @@ class UserBackendController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            yii::$app->adminLogRecord($model);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -135,9 +134,7 @@ class UserBackendController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
         $this->findModel($id)->delete();
-        yii::$app->adminLogRecord($model,AdminLog::ACTION_TYPE_DELETE);
         return $this->redirect(['index']);
     }
 
@@ -151,6 +148,7 @@ class UserBackendController extends Controller
     protected function findModel($id)
     {
         if (($model = UserBackend::findOne($id)) !== null) {
+            $this->attachAdminLogBehavior($model);
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

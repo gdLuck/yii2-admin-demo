@@ -2,16 +2,16 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use backend\models\LoginForm;
 use backend\models\AdminLog;
+use backend\components\AdminController;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends AdminController
 {
     /**
      * @inheritdoc
@@ -86,9 +86,11 @@ class SiteController extends Controller
         }
         // 实例化登录模型 backend\models\LoginForm
         $model = new LoginForm();
+        //添加日志行为 
+        $this->attachAdminLogBehavior($model);
         // 接收表单数据并调用LoginForm的login方法
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            yii::$app->adminLogRecord($model,AdminLog::ACTION_TYPE_LOGIN);
+            $model->modelLogRecord($model, AdminLog::ACTION_TYPE_LOGIN);
             return $this->goBack();
         } else {
             return $this->render('login', [
