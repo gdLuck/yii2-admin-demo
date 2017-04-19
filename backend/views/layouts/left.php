@@ -1,6 +1,7 @@
 <?php 
 use mdm\admin\components\MenuHelper;
 use backend\components\Menu;
+use backend\components\Helper;
 ?>
 <aside class="main-sidebar">
 
@@ -32,32 +33,10 @@ use backend\components\Menu;
 
         <!-- 菜单管理 -->
         <?php 
-        $callback = function($menu){
-            $data = json_decode($menu['data'], true);
-            $items = $menu['children'];
-            $return = [
-                'label' => $menu['name'],
-                'url' => [$menu['route']],
-            ];
-            //处理我们的配置
-            if ($data) {
-                //visible
-                isset($data['visible']) && $return['visible'] = $data['visible'];
-                //icon
-                isset($data['icon']) && $data['icon'] && $return['icon'] = $data['icon'];
-                //other attribute e.g. class...
-                $return['options'] = $data;
-            }
-            //没配置图标的显示默认图标
-            (!isset($return['icon']) || !$return['icon']) && $return['icon'] = 'fa fa-circle-o';
-            $items && $return['items'] = $items;
-            return $return;
-        };
-        
         //改用修改后的Menu widget 
         echo Menu::widget([ 
             'options' => ['class' => 'sidebar-menu'], 
-            'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id, null, $callback), 
+            'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id, null, array(Helper::class, 'sidebarMenuCallback')), 
         ] );?>
         <!-- END -->
     </section>

@@ -5,6 +5,8 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\base\NotSupportedException;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "{{%user_backend}}".
@@ -39,9 +41,29 @@ class UserBackend extends ActiveRecord implements IdentityInterface
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
             [['email'], 'unique'],
+            ['email','email'],
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \yii\base\Component::behaviors()
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                // if you're using datetime instead of UNIX timestamp:
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+    
     /**
      * @inheritdoc
      */
@@ -54,7 +76,7 @@ class UserBackend extends ActiveRecord implements IdentityInterface
             'password_hash' => '密码',
             'email' => '邮箱',
             'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'updated_at' => '最新更新时间',
         ];
     }
     
@@ -139,4 +161,5 @@ class UserBackend extends ActiveRecord implements IdentityInterface
     {
         return $this->getAuthKey() === $authKey;
     }
+    
 }

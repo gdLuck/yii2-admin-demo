@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Blog */
+/* @var $model backend\models\AdminLog */
 
-$this->title = 'Create Blog';
-$this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index']];
+$this->title = 'Create Admin Log';
+$this->params['breadcrumbs'][] = ['label' => 'Admin Logs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="blog-create">
+<div class="admin-log-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

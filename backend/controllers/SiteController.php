@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use backend\models\LoginForm;
+use backend\models\AdminLog;
 
 /**
  * Site controller
@@ -22,13 +23,17 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error','captcha'],
                         'allow' => true,
                     ],
                     [
                         'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
+                        #'ips' => ['127.0.0.1'],
+                        //'matchCallback' => function ($rule, $action) {
+                        //    return date('Y-m-d') === '2017-5-1';  #设置规则只有5月1日可访问此
+                        //}
                     ],
                 ],
             ],
@@ -50,6 +55,10 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'captcha' => [
+                'class' => 'yii\captcha\captchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ] 
         ];
     }
 
@@ -79,6 +88,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         // 接收表单数据并调用LoginForm的login方法
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            yii::$app->adminLogRecord($model,AdminLog::ACTION_TYPE_LOGIN);
             return $this->goBack();
         } else {
             return $this->render('login', [

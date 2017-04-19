@@ -6,9 +6,10 @@ use Yii;
 use backend\models\UserBackend;
 use backend\models\UserBackendSearch;
 use backend\models\SignupForm;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Controller;
 use yii\filters\VerbFilter;
+use backend\models\AdminLog;
 
 /**
  * UserBackendController implements the CRUD actions for UserBackend model.
@@ -68,9 +69,10 @@ class UserBackendController extends Controller
         // $model->load() 方法，实质是把post过来的数据赋值给model
         // $model->signup() 方法, 是我们要实现的具体的添加用户操作
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            yii::$app->adminLogRecord($model,AdminLog::ACTION_TYPE_SIGNUP);
             return $this->redirect(['index']);
         }
-    
+        
         // 渲染添加新用户的表单
         return $this->render('signup', [
             'model' => $model,
@@ -97,6 +99,7 @@ class UserBackendController extends Controller
         $model = new UserBackend();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            yii::$app->adminLogRecord($model,AdminLog::ACTION_TYPE_CREATE);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -114,8 +117,8 @@ class UserBackendController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            yii::$app->adminLogRecord($model);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -132,8 +135,9 @@ class UserBackendController extends Controller
      */
     public function actionDelete($id)
     {
+        $model = $this->findModel($id);
         $this->findModel($id)->delete();
-
+        yii::$app->adminLogRecord($model,AdminLog::ACTION_TYPE_DELETE);
         return $this->redirect(['index']);
     }
 

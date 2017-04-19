@@ -7,11 +7,12 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use frontend\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\helpers\VarDumper;
 
 /**
  * Site controller
@@ -55,9 +56,6 @@ class SiteController extends Controller
     public function actions()
     {
         return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
@@ -65,6 +63,29 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * 错误页-自定义
+     */
+    public function actionError()
+    {
+        /* 自定义错误页 */
+        $name = yii::$app->errorHandler->exception->statusCode;
+        $message = yii::$app->errorHandler->exception->getMessage();
+        $exception = Yii::$app->errorHandler->exception;
+        if ($exception !== null) {
+            return $this->render('error', [
+                'exception' => $exception,
+                'name' => $name,
+                'message' => $message,
+            ]);
+        }
+        
+        /* 重定向  */
+//         $url = '/site/index';
+//         Yii::$app->getResponse()->redirect($url)->send();
+//         return;
+    }
+    
     /**
      * Displays homepage.
      *

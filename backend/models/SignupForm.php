@@ -41,7 +41,7 @@ class SignupForm extends Model
             ['password', 'required', 'message' => '密码不可以为空'],
             ['password', 'string', 'min' => 6, 'tooShort' => '密码至少填写6位'],
             // default 默认在没有数据的时候才会进行赋值
-            [['created_at', 'updated_at'], 'default', 'value' => date('Y-m-d H:i:s')],
+            //[['created_at', 'updated_at'], 'default', 'value' => date('Y-m-d H:i:s')],
         ];
     }
     
@@ -74,8 +74,8 @@ class SignupForm extends Model
         $user = new UserBackend();
         $user->username = $this->username;
         $user->email = $this->email;
-        $user->created_at = $this->created_at;
-        $user->updated_at = $this->updated_at;
+        #$user->created_at = $this->created_at; //改为用户表行为自动添加
+        #$user->updated_at = $this->updated_at;
     
         // 设置密码，密码肯定要加密，暂时我们还没有实现，看下面我们有实现的代码
         $user->setPassword($this->password);
