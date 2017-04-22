@@ -2,6 +2,17 @@
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=yii2blog',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+            'tablePrefix' => 'vrbox_',
+            #'enableSchemaCache' => true,#若数据库有变动要关闭更新以缓存
+            #'schemaCacheDuration' => 24*3600,
+            #'schemaCache' => 'cache',
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -14,7 +25,7 @@ return [
         'redis' => [
             'class' => 'yii\redis\Connection',
             'hostname' => '',
-            'password' => '',
+            'password' => '',#本地配置会覆盖线上配置
             'port' => 6379,
             'database' => 0,
         ],

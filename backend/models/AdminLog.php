@@ -95,7 +95,7 @@ class AdminLog extends ActiveRecord
     /**
      * @return array 事件类型
      */
-    public function getActionType()
+    public static function getActionType()
     {
         $array = array(
             self::ACTION_TYPE_LOGIN  => '登录事件',

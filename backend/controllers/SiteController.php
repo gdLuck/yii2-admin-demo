@@ -1,4 +1,9 @@
 <?php
+/**
+ * 后台首页
+ * adminlte 详细样式位置：
+ * /vendor/almasaeed2010/adminlte/index.html 
+ */
 namespace backend\controllers;
 
 use Yii;
@@ -6,12 +11,13 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use backend\models\LoginForm;
 use backend\models\AdminLog;
-use backend\components\AdminController;
+use backend\components\BackendHelper;
+use yii\web\Controller;
 
 /**
  * Site controller
  */
-class SiteController extends AdminController
+class SiteController extends Controller
 {
     /**
      * @inheritdoc
@@ -23,7 +29,7 @@ class SiteController extends AdminController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error','captcha'],
+                        'actions' => ['login', 'error', 'captcha', 'formatter-test'],
                         'allow' => true,
                     ],
                     [
@@ -69,9 +75,68 @@ class SiteController extends AdminController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        #Yii::$app->getSession()->setFlash('success', '<b>成功!</b> ');
+        #Yii::$app->getSession()->setFlash('warning', '<b>警告!</b> ');
+        #Yii::$app->getSession()->setFlash('error', ['Error 1', 'Error 2']);  #多个错误时
+        
+        $data['serverSoft'] = $_SERVER['SERVER_SOFTWARE'];
+        $data['serverOs']   = PHP_OS;
+        $data['phpVersion'] = PHP_VERSION;
+        $data['fileupload'] = ini_get('file_uploads') ? ini_get('upload_max_filesize') : '禁止上传';
+        $data['serverUri']  = $_SERVER['SERVER_NAME'];
+        $data['maxExcuteTime']   = ini_get('max_execution_time') . ' 秒';
+        $data['maxExcuteMemory'] = ini_get('memory_limit');
+        $data['allow_url_fopen'] = ini_get('allow_url_fopen') ? '开启' : '关闭';
+        $data['excuteUseMemory'] = function_exists('memory_get_usage') ? BackendHelper::fileSizeBKM(memory_get_usage()) : '未知';
+//         $dbsize = 0;
+//         $connection = yii::$app->db;
+//         $sql = 'SHOW TABLE STATUS LIKE \'' . $connection->tablePrefix . '%\'';
+//         $command = $connection->createCommand($sql)->queryAll();
+//         foreach ($command as $table){
+//             $dbsize += $table['Data_length'] + $table['Index_length'];
+//         }
+//         $mysqlVersion = $connection->createCommand("SELECT version() AS version")->queryAll();
+//         $data['mysqlVersion'] = $mysqlVersion[0]['version'];
+//         $data['dbsize'] = $dbsize ? BackendHelper::fileSizeBKM($dbsize) : '未知';
+        
+        return $this->render('index',[
+            'server' => $data,
+        ]);
     }
-
+    
+    /**
+     * 格式化输出测试
+     */
+    public function actionFormatterTest()
+    {
+        $formatter = yii::$app->formatter;
+        // output: January 1, 2014
+        echo $formatter->asDate('2014-01-01', 'long').PHP_EOL;
+        
+        // output: 12.50%
+        echo $formatter->asPercent(0.125, 2).PHP_EOL;
+        
+        // output: <a href="mailto:cebe@example.com">cebe@example.com</a>
+        echo $formatter->asEmail('cebe@example.com').PHP_EOL;
+        
+        // output: Yes
+        echo $formatter->asBoolean(true).PHP_EOL;
+        // it also handles display of null values:
+        
+        // output: (Not set)
+        echo $formatter->asDate(null).PHP_EOL;
+        
+        // output: January 1, 2014
+        echo Yii::$app->formatter->format('2014-01-01', 'date').PHP_EOL;
+        
+        // 你可以在第二个参数指定一个数组，这个数组提供了一些配置的参数
+        // 例如这个 2 就是 asPercent() 方法的 $decimals 参数
+        // output: 12.50%
+        echo Yii::$app->formatter->format(0.125, ['percent', 2]).PHP_EOL;
+        // ICU format
+        echo Yii::$app->formatter->asDate('now', 'yyyy-MM-dd').PHP_EOL;// 2014-10-06
+    }
+    
     /**
      * Login action.
      *
@@ -87,7 +152,7 @@ class SiteController extends AdminController
         // 实例化登录模型 backend\models\LoginForm
         $model = new LoginForm();
         //添加日志行为 
-        $this->attachAdminLogBehavior($model);
+        BackendHelper::attachAdminLogBehavior($model);
         // 接收表单数据并调用LoginForm的login方法
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $model->modelLogRecord($model, AdminLog::ACTION_TYPE_LOGIN);

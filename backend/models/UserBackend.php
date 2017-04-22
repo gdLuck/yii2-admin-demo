@@ -7,6 +7,7 @@ use yii\web\IdentityInterface;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use yii\helpers\VarDumper;
 
 /**
  * This is the model class for table "{{%user_backend}}".
@@ -161,5 +162,12 @@ class UserBackend extends ActiveRecord implements IdentityInterface
     {
         return $this->getAuthKey() === $authKey;
     }
-    
+    /**
+     * 根据用户ID取得用户名
+     */
+    public static function getUsername($id)
+    {
+        $user = static::find()->select(['username'])->where('id=:id',[':id'=>$id])->one();
+        return isset($user->username) ? $user->username : '' ;
+    }
 }

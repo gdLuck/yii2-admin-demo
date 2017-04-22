@@ -9,13 +9,14 @@ use backend\models\UserBackend;
 use backend\models\UserBackendSearch;
 use backend\models\SignupForm;
 use backend\models\AdminLog;
-use backend\components\AdminController;
+use backend\components\BackendHelper;
 use yii\helpers\VarDumper;
+use yii\web\Controller;
 
 /**
  * UserBackendController implements the CRUD actions for UserBackend model.
  */
-class UserBackendController extends AdminController
+class UserBackendController extends Controller
 {
     /**
      * @inheritdoc
@@ -65,7 +66,7 @@ class UserBackendController extends AdminController
     public function actionSignup ()
     {
         $model = new SignupForm();
-        $this->attachAdminLogBehavior($model);
+        BackendHelper::attachAdminLogBehavior($model);
         // 如果是post提交且有对提交的数据校验成功（我们在SignupForm的signup方法进行了实现）
         // $model->load() 方法，把post过来的数据赋值给model
         // $model->signup() 方法, 要实现的具体的添加用户操作
@@ -98,7 +99,7 @@ class UserBackendController extends AdminController
     public function actionCreate()
     {
         $model = new UserBackend();
-        $this->attachAdminLogBehavior($model);
+        BackendHelper::attachAdminLogBehavior($model);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -148,7 +149,7 @@ class UserBackendController extends AdminController
     protected function findModel($id)
     {
         if (($model = UserBackend::findOne($id)) !== null) {
-            $this->attachAdminLogBehavior($model);
+            BackendHelper::attachAdminLogBehavior($model);
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

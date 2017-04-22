@@ -36,7 +36,7 @@ class AdminLogController extends Controller
     public function actionIndex()
     {
         $searchModel = new AdminLogSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->Search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

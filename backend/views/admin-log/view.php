@@ -37,7 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'remote_addr',
             'status',
+            //['label'=>'gender','value'=>$model->getGenderText()],
         ],
+        //'template' => '<tr><th>{label}</th><td>{value}</td></tr>',
+        //'options' => ['class' => 'table table-striped table-bordered detail-view'],
     ]) ?>
 
 </div>

@@ -16,9 +16,6 @@ return [
             "class" => 'mdm\admin\Module',#引用的是下面定义的别名 yii2-admin/rbac配置
         ],
     ],
-    "aliases" => [
-        "@mdm/admin" => "@vendor/mdmsoft/yii2-admin",#yii2-admin/rbac配置
-    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

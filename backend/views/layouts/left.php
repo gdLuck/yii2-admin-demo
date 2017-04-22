@@ -1,7 +1,7 @@
 <?php 
 use mdm\admin\components\MenuHelper;
 use backend\components\Menu;
-use backend\components\Helper;
+use backend\components\BackendHelper;
 ?>
 <aside class="main-sidebar">
 
@@ -36,7 +36,7 @@ use backend\components\Helper;
         //改用修改后的Menu widget 
         echo Menu::widget([ 
             'options' => ['class' => 'sidebar-menu'], 
-            'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id, null, array(Helper::class, 'sidebarMenuCallback')), 
+            'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id, null, array(BackendHelper::class, 'sidebarMenuCallback')), 
         ] );?>
         <!-- END -->
     </section>

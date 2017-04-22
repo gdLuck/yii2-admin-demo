@@ -88,7 +88,7 @@ class MyActiveRecordBehavior extends Behavior
      * @param object $model 继承自\yii\base\model
      * @param int $type 事件类型
      */
-    public function modelLogRecord(Model $model, $type, $message = '')
+    public function modelLogRecord(Object $model, $type, $message = '')
     {
         if (AdminLog::ACTION_TYPE_LOGIN == $type){
             $actionInfo = '用户登录#' . (isset($model->username) ? $model->username : '');
