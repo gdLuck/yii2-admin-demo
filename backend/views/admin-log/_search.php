@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\jui\DatePicker;
 use yii\helpers\VarDumper;
 use backend\models\AdminLog;
 
@@ -27,17 +28,27 @@ use backend\models\AdminLog;
         ],
         'fieldConfig' => [ #过滤字段全局配置 yii\widgets\ActiveField
             'options' => ['style' => 'float:left; margin-right: 10px;'],
-            //'template' => "<sapn>{label}\n{input}\n{hint}\n{error}</span>",
+            //'template' => "{label}\n{input}\n{hint}\n{error}",
         ],
         
     ]); ?>
 
 	<?= $form->field($model, 'log_id', [
 	    //'options'=>['style' => 'float:left;'],
-	    //'template' => "<sapn>{label}\n{input}\n{hint}\n{error}</span>",
+	    //'template' => "<sapn>{label}\n{input}\n{hint}\n{error}</span>", 
 	]) #个性配置 ?>
 
-    <?= $form->field($model, 'log_time') ?>
+    <?= $form->field($model, 'startTime', [
+        'template'=> '<div>{label}</div>{input}{hint}{error}',
+    ])->widget(DatePicker::className(), [
+        //'clientOptions' => ['defaultDate' => '2017-01-01'],  未见生效，须在模型设置默认值
+        'dateFormat' => 'yyyy-MM-dd',
+    ]) ?>
+	<?= $form->field($model, 'endTime', [
+        'template'=> '<div>{label}</div>{input}{hint}{error}',
+    ])->widget(DatePicker::className(), [
+        'dateFormat' => 'yyyy-MM-dd',
+    ]) ?>
 	
     <?= $form->field($model, 'action_type')->dropDownList(
         AdminLog::getActionType(),

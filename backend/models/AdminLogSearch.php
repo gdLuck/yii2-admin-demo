@@ -10,12 +10,18 @@ use yii\helpers\VarDumper;
 use yii\db\Query;
 use yii\data\ArrayDataProvider;
 use yii\data\SqlDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * AdminLogSearch represents the model behind the search form about `backend\models\AdminLog`.
  */
 class AdminLogSearch extends AdminLog
 {
+    /**
+     * @var string
+     */
+    public $startTime,$endTime;
+    
     /**
      * @inheritdoc
      */
@@ -24,9 +30,19 @@ class AdminLogSearch extends AdminLog
         return [
             [['log_id', 'action_type', 'user_id', 'remote_addr', 'status'], 'integer'],
             [['log_time', 'action_info', 'action_controller', 'action_model'], 'safe'],
+            [['startTime'], 'default', 'value' => date('Y-m-d',strtotime('-1 week'))],
+            [['endTime'], 'default', 'value' => date('Y-m-d')],
         ];
     }
 
+    public function attributeLabels()
+    {
+        return ArrayHelper::merge([
+            'startTime' => '开始时间',
+            'endTime' => '结束时间'
+        ], parent::attributeLabels());  
+    }
+    
     /**
      * @inheritdoc
      */
@@ -83,13 +99,15 @@ class AdminLogSearch extends AdminLog
         // grid filtering conditions
         $query->andFilterWhere([
             'log_id' => $this->log_id,
-            'log_time' => $this->log_time,
             'action_type' => $this->action_type,
             'user_id' => $this->user_id,
             'remote_addr' => $this->remote_addr,
             'status' => $this->status,
         ]);
 
+        $query->andFilterWhere(['>=', 'log_time', strtotime($this->startTime)]);
+        $query->andFilterWhere(['<=', 'log_time', strtotime($this->endTime)]);
+        
         $query->andFilterWhere(['like', 'action_info', $this->action_info])
             ->andFilterWhere(['like', 'action_controller', $this->action_controller])
             ->andFilterWhere(['like', 'action_model', $this->action_model]);

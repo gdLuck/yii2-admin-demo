@@ -42,9 +42,8 @@ class AdminLog extends ActiveRecord
     public function rules()
     {
         return [
-            [['log_time'], 'safe'],
             [['action_type', 'action_info'], 'required'],
-            [['action_type', 'user_id', 'remote_addr', 'status'], 'integer'],
+            [['log_time', 'action_type', 'user_id', 'remote_addr', 'status'], 'integer'],
             [['action_info'], 'string', 'max' => 255],
             [['action_controller', 'action_model'], 'string', 'max' => 50],
         ];
@@ -87,7 +86,7 @@ class AdminLog extends ActiveRecord
             $option['action_controller'] = yii::$app->request->pathinfo;
             $option['user_id']	   = $userId;
             $option['remote_addr'] = ip2long(Yii::$app->request->userIP);
-            $option['log_time']    = date('Y-m-d H:i:s');
+            $option['log_time']    = time();
             $this->attributes= $option;
             $this->save();
         }
@@ -98,11 +97,12 @@ class AdminLog extends ActiveRecord
     public static function getActionType()
     {
         $array = array(
-            self::ACTION_TYPE_LOGIN  => '登录事件',
+            self::ACTION_TYPE_LOGIN  => '登录操作',
             self::ACTION_TYPE_CREATE => '创建数据',
             self::ACTION_TYPE_UPDATE => '更新数据',
             self::ACTION_TYPE_DELETE => '删除数据',
             self::ACTION_TYPE_AUTH   => '权限配置',
+            self::ACTION_TYPE_SIGNUP => '注册操作',
         );
     
         $ext_file = dirname(__FILE__).'/AdminLogType.php';

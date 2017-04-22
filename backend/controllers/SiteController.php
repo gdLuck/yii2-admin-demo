@@ -9,10 +9,14 @@ namespace backend\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\filters\PageCache;
+use yii\filters\Cors;
+use yii\caching\DbDependency;
 use backend\models\LoginForm;
 use backend\models\AdminLog;
 use backend\components\BackendHelper;
 use yii\web\Controller;
+use yii\helpers\ArrayHelper;
 
 /**
  * Site controller
@@ -24,9 +28,24 @@ class SiteController extends Controller
      */
     public function behaviors()
     {
-        return [
+        return ArrayHelper::merge([
+            [
+                'class' => Cors::className(),
+                'cors' => [
+                    'Origin' => ['http://www.vrpeng.com'], #定义允许来源数组
+                    #'Access-Control-Request-Method' => ['GET', 'HEAD', 'OPTIONS'],  #允许动作数组
+                    #'Access-Control-Request-Headers' =>['*'],  #允许请求头部数组     例 ['X-Request-With'] 指定类型头部
+                    #'Access-Control-Allow-Credentials' => null,  #定义当前请求是否使用证书
+                    #'Access-Control-Max-Age' => 86400,  #定义请求的有效时间
+                ],
+                'actions' => [
+                    'login' => [
+                        'Access-Control-Allow-Credentials' => true,
+                    ]
+                ]
+            ],
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::className(), #权限
                 'rules' => [
                     [
                         'actions' => ['login', 'error', 'captcha', 'formatter-test'],
@@ -43,13 +62,30 @@ class SiteController extends Controller
                     ],
                 ],
             ],
+            'pageCache' => [
+                'class' => PageCache::className(),#页面缓存
+                'only' => ['index'],
+                'duration' => 60,
+                //                 'dependency' => [
+                    //                     #'class' => DbDependency::className(),
+                    //                     #'sql' => 'SELECT COUNT(*) FROM post',
+                    //                 ],
+                'variations' => [
+                    \Yii::$app->language,
+                ]
+            ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::className(), #检查请求动作的HTTP请求方式是否允许执行
                 'actions' => [
                     'logout' => ['post'],
+                    #'index'  => ['get'],
+                    #'view'   => ['get'],
+                    #'create' => ['get', 'post'],
+                    #'update' => ['get', 'put', 'post'],
+                    #'delete' => ['post', 'delete'],
                 ],
             ],
-        ];
+        ], parent::behaviors());
     }
 
     /**

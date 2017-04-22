@@ -51,7 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'text',
                 'label' => '序列ID',
             ],
-            'log_time:text:操作时间', #快捷方法
+            [
+                'attribute' => 'log_time',
+                'value' => function ($model, $key, $index, $column) {
+                    return date('Y-m-d H:i:s',$model->log_time);
+                },
+            ],
             [
                 'attribute' => 'action_type',
                 'content'  => function ($model, $key, $index, $column) {#可获取值 $column 为 yii\grid\Column对象  写value或content都可
@@ -71,8 +76,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'visible' => false,
             ],
             'action_info',
-            'action_controller',
-            'action_model',
+            'action_controller:text:操作路由', #快捷方法,
+            
             [
                 'class' => 'yii\grid\ActionColumn',#操作栏
                 'header'=> '操作',
