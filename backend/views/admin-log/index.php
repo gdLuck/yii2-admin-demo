@@ -3,11 +3,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\CheckboxColumn;
 use yii\grid\DataColumn;
-use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
 use backend\models\AdminLog;
 use backend\components\AdminHelper;
+use backend\components\widgets\GotoLinkPager;
+use yii\helpers\VarDumper;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\AdminLogSearch */
@@ -33,10 +35,36 @@ $this->params['breadcrumbs'][] = $this->title;
 //         ],
 //     ]);
     ?>
-
+    
 	<?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'dataProvider' => $dataProvider, #数据模型
+        'filterModel' => $searchModel, #过滤模型
+	    //'filterUrl' => 'http://test.com',
+	    
+	    //'headerRowOptions' => ['data-test' => 'header row test'],
+	    //'rowOptions' => ['data-test'=>'row test'], #逐行属性配置
+	    //'showFooter'=>true,  #待测试看是否可做小结
+	    //'footerRowOptions' => ['data-test' => 'footer row test'],
+	    'layout' => "{items}\n{pager}",
+// 	    'caption' => '日志管理',
+// 	    'captionOptions' => [
+// 	        'data' => ['id' => 1, 'name' => 'yii'],
+// 	        'style' => ['text-align' => 'center']
+// 	    ],
+	    'pager'=>array(
+			'class'=> GotoLinkPager::className(),
+	        //'options' => ['class' => 'm-pagination'],
+	        'firstPageLabel' => '首页',
+	        'lastPageLabel' => '尾页',
+	        //'prevPageLabel' => '上一页',
+	        //'nextPageLabel' => '下一页',
+	        //'registerLinkTags' => true,
+	        'goPageLabel' => true,
+	        'totalPageLable' => '共x页',
+	        //'goButtonLable' => 'GO',
+	        'maxButtonCount' => 5
+	    ),
+	    
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],  #连续ID列
             [
@@ -52,6 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'log_time',
+                'filter' => false,
                 'value' => function ($model, $key, $index, $column) {
                     return date('Y-m-d H:i:s',$model->log_time);
                 },
@@ -64,12 +93,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['class'=>['test content']], #设置行属性
                 'format' => 'text',
                 //'header' => 'test head', #
-            	'headerOptions' => [
+            	'headerOptions' => [#追加到头部内容
             	    'class' => ['test header'],
             	    'style' => 'width:150px',
             	    'data'  => ['id' => 1, 'name' => 'type']
-            	],#追加到头部内容
-                //'footer' => '',#待深入研究
+            	],
+                //'footer' => '',#待研究
                 //'footerOptions' => [],
                 'filterOptions' => ['class'=>'test filter'], #搜索栏、过滤栏
                 //'visible' => false,

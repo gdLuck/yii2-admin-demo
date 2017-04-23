@@ -71,7 +71,7 @@ class AdminLogSearch extends AdminLog
             'db' => yii::$app->db,
             'query' => $query, #此必须其他可选
             'pagination' => [
-                'pageSize' => 15,
+                'pageSize' => 20,
             ],
             'sort' => [
                 'defaultOrder' => [
