@@ -135,6 +135,11 @@ class UserBackendController extends Controller
      */
     public function actionDelete($id)
     {
+        if (1 == $id){
+            yii::$app->getSession()->setFlash('error','总管理员不可删除！');
+            return Yii::$app->getResponse()->redirect('/user-backend/index');
+        }
+        
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }

@@ -12,7 +12,7 @@ use backend\models\AdminLog;
 ?>
 <style>
 .search_position{
-	height: 70px;
+	height: 80px;
     line-height: 70px;
     padding-left: 60%;
 }

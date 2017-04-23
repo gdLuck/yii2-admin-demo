@@ -12,7 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-backend-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -30,7 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'created_at',
             'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'visibleButtons' => [
+                    'view',
+                    'update',
+                    'delete' => function ($model) {
+                        return $model->id != 1;
+                    },
+                ],         
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

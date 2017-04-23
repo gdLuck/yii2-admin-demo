@@ -13,7 +13,6 @@ use backend\components\AdminHelper;
 /* @var $searchModel backend\models\AdminLogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Admin Logs';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="admin-log-index">
