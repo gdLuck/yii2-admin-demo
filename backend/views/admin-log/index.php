@@ -6,7 +6,7 @@ use yii\grid\DataColumn;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
 use backend\models\AdminLog;
-use backend\components\AdminHelper;
+use backend\components\FormHelper;
 use backend\components\widgets\GotoLinkPager;
 use yii\helpers\VarDumper;
 
@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'action_type',
                 'content'  => function ($model, $key, $index, $column) {#可获取值 $column 为 yii\grid\Column对象  写value或content都可
-                    return AdminHelper::getLogTypeLabel($model->action_type);
+                    return FormHelper::getLogTypeLabel($model->action_type);
                 },
                 'contentOptions' => ['class'=>['test content']], #设置行属性
                 'format' => 'text',
@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',#操作栏
                 'header'=> '操作',
-                'controller' => 'admin-log/index', #未设置默认当前
+                //'controller' => 'admin-log/index', #未设置默认当前
                 'template'=>'{view}{test}',
                 'buttons' => [
                     'test' => function ($url, $model, $key) {
@@ -120,8 +120,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'view' => function ($model, $key, $index) {
                         return $model->status === 1;
                     },
-                    //'update' => \Yii::$app->user->can('update'), #检查权限
-                    //'delete' => true,
+                    //'update' => \Yii::$app->user->can('update'), #可检查权限
+                    //'delete' => true, #可直接设置
                 ],
                 #'urlCreator' => function ($action, $model, $key, $index, $this){ #自定义回调函数用于生成 URL路径
                 #    return 'test url';

@@ -33,3 +33,10 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+
+#忽略个别本地配置文件
+/common/config/db-local.php
+/common/config/main-local.php
+
+/backend/web/uploads/image
+/backend/web/uploads/images

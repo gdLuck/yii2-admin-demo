@@ -31,7 +31,7 @@ class AdminLogSearch extends AdminLog
             [['log_id', 'action_type', 'user_id', 'remote_addr', 'status'], 'integer'],
             [['log_time', 'action_info', 'action_controller', 'action_model'], 'safe'],
             [['startTime'], 'default', 'value' => date('Y-m-d',strtotime('-1 week'))],
-            [['endTime'], 'default', 'value' => date('Y-m-d')],
+            [['endTime'], 'default', 'value' => date('Y-m-d', strtotime('+1 day'))],
         ];
     }
 

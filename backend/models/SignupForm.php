@@ -27,7 +27,7 @@ class SignupForm extends Model
             ['username', 'filter', 'filter' => 'trim'],
             // required表示必须的，也就是说表单提交过来的值必须要有, message 是username不满足required规则时给的提示消息
             ['username', 'required', 'message' => '用户名不可以为空'],
-            // unique表示唯一性，targetClass表示的数据模型 这里就是说UserBackend模型对应的数据表字段username必须唯一
+            // unique表示唯一性，targetClass表示的数据模型 这里就是说UserBackend模型对应的数据表字段username必须唯一  非AR模型时定义
             ['username', 'unique', 'targetClass' => '\backend\models\UserBackend', 'message' => '用户名已存在.'],
             // string 字符串，这里我们限定的意思就是username至少包含2个字符，最多255个字符
             ['username', 'string', 'min' => 3, 'max' => 255, 'tooShort' => '用户名须为5-255个字符之间'],
