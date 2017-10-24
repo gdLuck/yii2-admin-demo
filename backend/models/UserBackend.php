@@ -130,7 +130,7 @@ class UserBackend extends ActiveRecord implements IdentityInterface
     
     /**
      * @inheritdoc
-     * 根据access_token获取用户，我们暂时先不实现，我们在文章 http://www.manks.top/yii2-restful-api.html 有过实现，如果你感兴趣的话可以看看
+     * 根据access_token获取用户，暂时先不实现，参考文章 http://www.manks.top/yii2-restful-api.html
      */
     public static function findIdentityByAccessToken($token, $type = null){
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');

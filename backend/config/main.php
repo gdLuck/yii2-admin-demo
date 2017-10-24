@@ -8,12 +8,19 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => '后台管理系统',
+    'language'=>'zh_cn',
+    'timeZone'=>'Asia/Shanghai',
+    'charset'=>'utf-8',
+    'defaultRoute'=>'site',//指定未配置的请求的响应 路由 规则
+    
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
+    
     'bootstrap' => ['log'],
     'modules' => [
         "admin" => [
-            "class" => 'mdm\admin\Module',#引用的是下面定义的别名 yii2-admin/rbac配置
+            "class" => 'mdm\admin\Module',#引用别名  用于yii2-admin/rbac配置
         ],
     ],
     'components' => [
@@ -87,7 +94,6 @@ return [
             'errorAction' => 'site/error',
             #'errorView' => '', //可以配置错误处理器的 errorView 和 exceptionView 属性 使用自定义的错误显示视图。
         ],
-        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -107,8 +113,10 @@ return [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            //这里是允许访问的action
+            //这里是允许访问的action //控制器内优先级高于此处
             'site/captcha',
+            'site/logout',
+            'site/login'
             //'*'  #初始测试用
         ]
     ],

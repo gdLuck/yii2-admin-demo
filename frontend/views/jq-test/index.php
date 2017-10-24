@@ -69,12 +69,15 @@
 <input type="button" name="test" class="test" value="test" />
 <input type="button" name="submit" id="test-submit" value="测试" />
 <input type="button" name="submit" id="ajax-submit" value="ajax" />
+
 <script>
 
 var t = new Date().getTime();
 var i=1;
 var text='';
 $(document).ready(function(){
+//$(function(){ 简写方式
+	
 	 $("p .ppp").click(function(){
 	   	$(this).hide();
 	 });
@@ -118,7 +121,8 @@ $(document).ready(function(){
 // 	        };
 // 		}
 		
-		//var temp = $("select option:selected"); console.log(temp); alert(temp.val());
+		/* 下拉列表测试 */
+		var temp = $("select option:selected"); console.log(temp); alert(temp.val());
 
 // 		var temp = $("div form input[name='newsletter']").each(function(i){
 // 			console.log(i + ":" + $(this).size());
@@ -126,9 +130,10 @@ $(document).ready(function(){
 // 			$(this).val('123');
 // 		});
 
-		$("#ddd").data("vvv", {first: 16, last: "pizza!" });
-		var temp = $("#ddd").data('vvv');
-		console.log(temp );
+		/* data-* 数据处理 */
+// 		$("#ddd").data("vvv", {first: 16, last: "pizza!" });
+// 		var temp = $("#ddd").data('vvv');
+// 		console.log(temp );
 	})
 	
 	$("#ajax-submit").on('click',function(){

@@ -40,7 +40,7 @@ class SiteController extends Controller
                 ],
                 'actions' => [
                     'login' => [
-                        'Access-Control-Allow-Credentials' => true,
+                        'Access-Control-Allow-Credentials' => false, // 表示是否可以将对请求的响应暴露给页面。
                     ]
                 ]
             ],
@@ -62,18 +62,18 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-            'pageCache' => [
-                'class' => PageCache::className(),#页面缓存
-                'only' => ['index'],
-                'duration' => 60,
-                //                 'dependency' => [
-                    //                     #'class' => DbDependency::className(),
-                    //                     #'sql' => 'SELECT COUNT(*) FROM post',
-                    //                 ],
-                'variations' => [
-                    \Yii::$app->language,
-                ]
-            ],
+//            'pageCache' => [
+//                'class' => PageCache::className(),#页面缓存
+//                'only' => ['index'],
+//                'duration' => 60,
+//                //                 'dependency' => [
+//                    //                     #'class' => DbDependency::className(),
+//                    //                     #'sql' => 'SELECT COUNT(*) FROM post',
+//                    //                 ],
+//                'variations' => [
+//                    \Yii::$app->language,
+//                ]
+//            ],
             'verbs' => [
                 'class' => VerbFilter::className(), #检查请求动作的HTTP请求方式是否允许执行
                 'actions' => [
