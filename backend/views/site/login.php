@@ -44,7 +44,7 @@ $fieldOptions2 = [
 		<?= $form
 		    ->field($model, 'verifyCode')
 		    ->widget(Captcha::className(), [
-              'template' => '<div class="row"><div class="col-lg-4">{image}</div><div class="col-lg-6">{input}</div></div>',
+                'template' => '<div class="row"><div class="col-lg-4">{image}</div><div class="col-lg-6">{input}</div></div>',
             ]) ?>
         <div class="row">
             <div class="col-xs-8">

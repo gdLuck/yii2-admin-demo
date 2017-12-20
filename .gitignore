@@ -40,3 +40,4 @@ phpunit.phar
 
 /backend/web/uploads/image
 /backend/web/uploads/images
+/composer.lock

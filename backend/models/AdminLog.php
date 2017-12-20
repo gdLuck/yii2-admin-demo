@@ -21,10 +21,10 @@ use yii\helpers\Url;
  */
 class AdminLog extends ActiveRecord
 {
-    const ACTION_TYPE_LOGIN  = 1;
+    const ACTION_TYPE_LOGIN  = 1; // 登录
     const ACTION_TYPE_CREATE = 2;
-    const ACTION_TYPE_UPDATE = 3;
-    const ACTION_TYPE_DELETE = 4;
+    const ACTION_TYPE_UPDATE = 3; // 修改
+    const ACTION_TYPE_DELETE = 4; // 删除
     const ACTION_TYPE_AUTH   = 5;
     const ACTION_TYPE_SIGNUP = 6;
     

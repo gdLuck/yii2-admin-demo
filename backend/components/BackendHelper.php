@@ -2,6 +2,7 @@
 /**
  * 后台常用功能
  */
+
 namespace backend\components;
 
 use yii;
@@ -17,7 +18,7 @@ class BackendHelper extends Helper
      * @param string $port 端口
      * @return string|int
      */
-    public static function getMyIp($dest='64.0.0.0', $port=80)
+    public static function getMyIp($dest = '64.0.0.0', $port = 80)
     {
         $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         socket_connect($socket, $dest, $port);
@@ -25,27 +26,25 @@ class BackendHelper extends Helper
         socket_close($socket);
         return $addr;
     }
+
     /**
      * b转MB，精确到小数点后2位
      * @param $size 文件大小
      * @return string
      */
     public static function fileSizeBKM($size)
-    { // B/KB/MB单位转换
-    if($size < 1024)
     {
-        $size_BKM = (string)$size . " B";
+        // B/KB/MB单位转换
+        if ($size < 1024) {
+            $size_BKM = (string)$size . " B";
+        } elseif ($size < (1024 * 1024)) {
+            $size_BKM = number_format((double)($size / 1024), 2) . " KB";
+        } else {
+            $size_BKM = number_format((double)($size / (1024 * 1024)), 2) . " MB";
+        }
+        return $size_BKM;
     }
-    elseif($size < (1024 * 1024))
-    {
-        $size_BKM = number_format((double)($size / 1024), 2) . " KB";
-    }else
-    {
-        $size_BKM = number_format((double)($size / (1024*1024)), 2)." MB";
-    }
-    return $size_BKM;
-    }
-    
+
     /**
      * 为模型添加行为
      * @property yii\db\ActiveRecord | yii\base\Model $model
@@ -55,12 +54,12 @@ class BackendHelper extends Helper
      */
     public static function attachAdminLogBehavior($model)
     {
-        if ($model instanceof ActiveRecord){
-            yii::$app->session->setFlash($model->tableName().'_Orig_Attribute', $model->attributes);
+        if ($model instanceof ActiveRecord) {
+            yii::$app->session->setFlash($model->tableName() . '_Orig_Attribute', $model->attributes);
         }
         $model->attachBehavior('adminLogRecordBehavior', MyActiveRecordBehavior::className());
     }
-    
+
     /**
      * 后台侧边栏导航菜单回调处理
      * @param unknown $menu
@@ -71,7 +70,8 @@ class BackendHelper extends Helper
      *        'items' => $menu['children']
      * ]
      */
-    public static function sidebarMenuCallback($menu){
+    public static function sidebarMenuCallback($menu)
+    {
         $data = json_decode($menu['data'], true);
         $items = $menu['children'];
         $return = [
