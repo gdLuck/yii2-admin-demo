@@ -90,6 +90,7 @@ class BackendHelper extends Helper
         //没配置图标的显示默认图标
         (!isset($return['icon']) || !$return['icon']) && $return['icon'] = 'fa fa-circle-o';
         $items && $return['items'] = $items;
+
         return $return;
     }
 }

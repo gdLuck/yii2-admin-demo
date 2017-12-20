@@ -1,8 +1,13 @@
-使用说明
+说明
 ===============================
+> 使用插件
 
+```
+后台主题：dmstr/yii2-adminlte-asset
+权限管理：mdmsoft/yii2-admin
+```
 
-异常处理：
+> 异常处理：
 
 ```
 The file or directory to be published does not exist: `bower/jquery/dist`:

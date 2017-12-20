@@ -33,10 +33,10 @@ use backend\components\BackendHelper;
 
         <!-- 菜单管理 -->
         <?php 
-        //改用修改后的Menu widget 
+        //改用修改后的Menu widget
         echo Menu::widget([
-            'options' => ['class' => 'sidebar-menu'], 
-            'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id, null, array(BackendHelper::class, 'sidebarMenuCallback')), 
+            'options' => ['class' => 'sidebar-menu'],
+            'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id, null, array(BackendHelper::class, 'sidebarMenuCallback')),
         ] );?>
         <!-- END -->
     </section>
