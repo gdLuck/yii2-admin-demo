@@ -35,7 +35,7 @@ use backend\components\BackendHelper;
         <?php 
         //改用修改后的Menu widget
         echo Menu::widget([
-            'options' => ['class' => 'sidebar-menu'],
+            'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
             'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id, null, array(BackendHelper::class, 'sidebarMenuCallback')),
         ] );?>
         <!-- END -->
