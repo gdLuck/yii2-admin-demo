@@ -244,12 +244,12 @@ class Uploader
         $format = str_replace("{ii}", $d[5], $format);
         $format = str_replace("{ss}", $d[6], $format);
         $format = str_replace("{time}", $t, $format);
-        //过滤文件名的非法自负,并替换文件名
+        //过滤文件名的非法字符,并替换文件名
         $oriName = substr($this->oriName, 0, strrpos($this->oriName, '.'));
         $oriName = preg_replace("/[\|\?\"\<\>\/\*\\\\]+/", '', $oriName);
         $format = str_replace("{filename}", $oriName, $format);
         //替换随机字符串
-        $randNum = rand(1, 10000000000) . rand(1, 10000000000);
+        $randNum = mt_rand(1, 10000000) . mt_rand(1, 10000000);
         if (preg_match("/\{rand\:([\d]*)\}/i", $format, $matches)) {
             $format = preg_replace("/\{rand\:[\d]*\}/i", substr($randNum, 0, $matches[1]), $format);
         }
@@ -275,9 +275,8 @@ class Uploader
         if (substr($fullname, 0, 1) != '/') {
             $fullname = '/' . $fullname;
         }
-        if (substr($this->config['uploadPath'], 0, 1) != '/') {
-            $uploadPath = '/' . $this->config['uploadPath'];
-        }
+        $uploadPath = $this->checkUploadPath($this->config['uploadPath']);
+
         return $rootPath .$uploadPath. $fullname;
     }
     
@@ -297,15 +296,27 @@ class Uploader
     {
         return $this->fileSize <= ($this->config["maxSize"]);
     }
+
+    /**
+     * 检查配置路径
+     * @param $uploadPath
+     * @return string
+     */
+    private function checkUploadPath($uploadPath){
+        if (substr($uploadPath, 0, 1) != '/') {
+            $uploadPath = '/' . $uploadPath;
+        }
+        return $uploadPath;
+    }
+
     /**
      * 获取当前上传成功文件的各项信息
      * @return array
      */
     public function getFileInfo()
     {
-        if (substr($this->config['uploadPath'], 0, 1) != '/') {
-            $uploadPath = '/' . $this->config['uploadPath'];
-        }
+        $uploadPath = $this->checkUploadPath($this->config['uploadPath']);
+
         return array(
             "state"    => $this->stateInfo,
             "url"      => $this->fullName,

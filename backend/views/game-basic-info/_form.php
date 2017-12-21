@@ -59,7 +59,7 @@ div.required label:after {
             
     <?= $form->field($model, 'game_head_img')->widget('common\widgets\file_upload\fileUpload',[
             'config'=>[
-                'isCdn'=> true,
+                'isCdn'=> false,
             ]
         ]); ?>
 
