@@ -1,6 +1,6 @@
 <?php
 return [
     'adminEmail' => 'admin@example.com',
-    'uploadPath' => '/uploads',
+    'uploadPath' => '/uploads/',
     'cdnUrl' => 'http://cdn.vreyes.cn',
 ];

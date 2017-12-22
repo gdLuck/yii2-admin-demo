@@ -249,7 +249,7 @@ class Uploader
         $oriName = preg_replace("/[\|\?\"\<\>\/\*\\\\]+/", '', $oriName);
         $format = str_replace("{filename}", $oriName, $format);
         //替换随机字符串
-        $randNum = mt_rand(1, 10000000) . mt_rand(1, 10000000);
+        $randNum = mt_rand(1000, 10000000) . mt_rand(1000, 10000000);
         if (preg_match("/\{rand\:([\d]*)\}/i", $format, $matches)) {
             $format = preg_replace("/\{rand\:[\d]*\}/i", substr($randNum, 0, $matches[1]), $format);
         }
@@ -272,9 +272,7 @@ class Uploader
     {
         $fullname = $this->fullName;       
         $rootPath = isset($this->config['uploadFilePath'])&&!empty($this->config['uploadFilePath'])?$this->config['uploadFilePath']:$_SERVER['DOCUMENT_ROOT'];
-        if (substr($fullname, 0, 1) != '/') {
-            $fullname = '/' . $fullname;
-        }
+
         $uploadPath = $this->checkUploadPath($this->config['uploadPath']);
 
         return $rootPath .$uploadPath. $fullname;

@@ -68,7 +68,7 @@ class GameBasicInfo extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'game_id' => 'Game ID',
+            'game_id' => '游戏ID',
             'game_name' => '游戏名',
             'game_en_name' => '英文名',
             'game_alias' => '游戏别名',# 域名目录（用于URL路径显示）

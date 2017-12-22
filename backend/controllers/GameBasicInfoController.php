@@ -41,7 +41,7 @@ class GameBasicInfoController extends baseControllers
             'upload'=>[
                 'class' => '\common\widgets\file_upload\UploadAction',  //扩展地址别写错
                 'config' => [
-                    'imagePathFormat' => "/image/game/{yyyy}{mm}{dd}/{time}{rand:6}",
+                    'imagePathFormat' => "image/game/{yyyy}{mm}{dd}/{time}{rand:6}",
                     'imageMaxSize' => '1000000', //限制1M
                     'uploadPath' => yii::$app->params['uploadPath'],
                 ]
