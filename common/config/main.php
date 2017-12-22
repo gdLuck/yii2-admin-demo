@@ -11,8 +11,8 @@ return [
             "defaultRoles" => ["guest"],
         ],
         'cache' => [
-            'class' => 'yii\redis\cache',
-            'keyPrefix'   => 'game_datacache:',
+            'class' => 'common\components\Cache',
+            'keyPrefix'   => 'yii:vrpeng:datacache:',
             'redis' => [
                 'hostname' => '',
                 'password' => '',#本地配置会覆盖线上配置

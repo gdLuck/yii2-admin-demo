@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
+use backend\components\baseControllers;
 use Yii;
 use backend\models\GameBasicInfo;
 use backend\models\GameBasicInfoSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\VarDumper;
@@ -15,7 +15,7 @@ use backend\components\Pinyin;
 /**
  * GameBasicInfoController implements the CRUD actions for GameBasicInfo model.
  */
-class GameBasicInfoController extends Controller
+class GameBasicInfoController extends baseControllers
 {
     /**
      * @inheritdoc
@@ -131,8 +131,24 @@ class GameBasicInfoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->game_id]);
+        if (!empty(Yii::$app->request->post())) {
+            /* 处理分类信息 */
+            if (is_array($_POST['GameBasicInfo']['type_terrace'])){
+                $_POST['GameBasicInfo']['type_terrace'] = implode(',', $_POST['GameBasicInfo']['type_terrace']);
+            }
+            if (is_array($_POST['GameBasicInfo']['type_content'])){
+                $_POST['GameBasicInfo']['type_content'] = implode(',', $_POST['GameBasicInfo']['type_content']);
+            }
+            if (is_array($_POST['GameBasicInfo']['type_people'])){
+                $_POST['GameBasicInfo']['type_people'] = implode(',', $_POST['GameBasicInfo']['type_people']);
+            }
+            if (is_array($_POST['GameBasicInfo']['type_language'])){
+                $_POST['GameBasicInfo']['type_language'] = implode(',', $_POST['GameBasicInfo']['type_language']);
+            }
+
+            if ($model->load($_POST) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->game_id]);
+            }
         } else {
             
             /* 处理分类信息 */

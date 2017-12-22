@@ -1,6 +1,7 @@
 <?php
 namespace backend\models;
 
+use common\models\ARUser;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -20,7 +21,7 @@ use yii\helpers\VarDumper;
  * @property string $created_at
  * @property string $updated_at
  */
-class UserBackend extends ActiveRecord implements IdentityInterface
+class UserBackend extends ARUser implements IdentityInterface
 {
     /**
      * @inheritdoc
