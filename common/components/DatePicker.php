@@ -2,6 +2,7 @@
 /**
  * 日历组件
  * 可扩充功能：{ minDate: -20, maxDate: "+1M +10D" } 可选前20天，后一个月和10天
+ * today选项：showButtonPanel = true
  */
 
 namespace common\components;

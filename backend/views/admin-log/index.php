@@ -8,8 +8,6 @@ use yii\widgets\ListView;
 use backend\models\AdminLog;
 use backend\components\FormHelper;
 use backend\components\widgets\GotoLinkPager;
-use yii\helpers\VarDumper;
-
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\AdminLogSearch */
