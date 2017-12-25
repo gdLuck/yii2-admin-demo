@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model common\models\GameBasicInfo */
 
 $this->title = '添加游戏';
-$this->params['breadcrumbs'][] = ['label' => 'Game Basic Infos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '游戏管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="game-basic-info-create">

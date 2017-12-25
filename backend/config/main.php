@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'name' => '后台管理系统',
-    'language'=>'zh_cn',
+    'language'=>'zh-CN',
     'timeZone'=>'Asia/Shanghai',
     'charset'=>'utf-8',
     'defaultRoute'=>'site',//指定未配置的请求的响应 路由 规则

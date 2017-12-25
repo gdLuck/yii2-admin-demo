@@ -65,6 +65,6 @@ class FormHelper
      */
     public static function getStatusLabelOptions()
     {
-        return array('0'=>'禁用','1'=>'启用');
+        return array(''=> '全部', '0'=>'禁用','1'=>'启用');
     }
 }

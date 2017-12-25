@@ -7,7 +7,7 @@ use yii\helpers\VarDumper;
 use backend\components\BackendHelper;
 use backend\models\TagManage;
 use backend\components\FormHelper;
-use yii\jui\DatePicker;
+use common\components\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\GameBasicInfo */
@@ -92,11 +92,11 @@ div.required label:after {
     
     <?= $form->field($model, 'is_award')->radioList(FormHelper::getStatusLabelOptions()) ?>
 
-    <?= $form->field($model, 'issue_status')->textInput() ?>
+    <?= $form->field($model, 'issue_status')->radioList(FormHelper::getStatusLabelOptions()) ?>
 
     <?= $form->field($model, 'issue_time')->widget(DatePicker::className(), [
         //'clientOptions' => ['defaultDate' => '2017-01-01'],  未见生效，须在模型设置默认值
-        'dateFormat' => 'yyyy-MM-dd',
+        'dateFormat' => 'yyyy-MM-dd'
     ]) ?>
 
     <?= $form->field($model, 'steam_addr')->textInput(['maxlength' => true]) ?>
