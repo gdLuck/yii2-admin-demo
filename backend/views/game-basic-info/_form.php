@@ -7,7 +7,7 @@ use yii\helpers\VarDumper;
 use backend\components\BackendHelper;
 use backend\models\TagManage;
 use backend\components\FormHelper;
-use common\components\DatePicker;
+use common\widgets\WDatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\GameBasicInfo */
@@ -94,7 +94,7 @@ div.required label:after {
 
     <?= $form->field($model, 'issue_status')->radioList(FormHelper::getStatusLabelOptions()) ?>
 
-    <?= $form->field($model, 'issue_time')->widget(DatePicker::className(), [
+    <?= $form->field($model, 'issue_time')->widget(WDatePicker::className(), [
         //'clientOptions' => ['defaultDate' => '2017-01-01'],  未见生效，须在模型设置默认值
         'dateFormat' => 'yyyy-MM-dd'
     ]) ?>

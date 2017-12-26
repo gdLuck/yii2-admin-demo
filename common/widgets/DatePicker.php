@@ -5,7 +5,7 @@
  * today选项：showButtonPanel = true
  */
 
-namespace common\components;
+namespace common\widgets;
 
 use Yii;
 use yii\base\InvalidParamException;

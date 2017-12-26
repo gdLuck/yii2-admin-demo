@@ -13,11 +13,11 @@ use backend\components\widgets\GotoLinkPager;
 /* @var $searchModel backend\models\AdminLogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$this->title = '日志管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="admin-log-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 	<div></div>
 <?php Pjax::begin(); ?> 
@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',#操作栏
                 'header'=> '操作',
                 //'controller' => 'admin-log/index', #未设置默认当前
-                'template'=>'{view}{test}',
+                'template'=>'{view}&nbsp&nbsp{test}',
                 'buttons' => [
                     'test' => function ($url, $model, $key) {
                         return $model->status === 1 ? Html::a('{test}', $url) : '';
@@ -143,7 +143,7 @@ $(document).ready(function(){
 		console.log(keys);
 //  		$.ajax({
 //              type: "POST",
-//             url: "", #<?= \yii\helpers\Url::to(['/controller/action']); ?>
+//             url: "", #<?= \yii\helpers\Url::to(['/controller/action']); // 可处理指删除等 ?>
 //              dataType: "json",
 //              data: {keylist: keys}
 //         });

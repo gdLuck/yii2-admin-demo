@@ -1,8 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use common\components\DatePicker;
-use yii\helpers\VarDumper;
+use common\widgets\DatePicker;
+use common\widgets\WDatePicker;
 use backend\models\AdminLog;
 
 /* @var $this yii\web\View */
@@ -39,16 +39,19 @@ use backend\models\AdminLog;
 
     <?= $form->field($model, 'startTime', [
         'template'=> '<div>{label}</div>{input}{hint}{error}',
-    ])->widget(DatePicker::className(), [
+    ])->widget(WDatePicker::className(), [
         //'clientOptions' => ['defaultDate' => '2017-01-01'],  未见生效，须在模型设置默认值
-        'dateFormat' => 'yyyy-MM-dd',
+        'dateFormat' => 'yyyy-MM-dd HH:mm:ss',
+        'readOnly' => true
     ]) ?>
+
 	<?= $form->field($model, 'endTime', [
         'template'=> '<div>{label}</div>{input}{hint}{error}',
-    ])->widget(DatePicker::className(), [
-        'dateFormat' => 'yyyy-MM-dd',
+    ])->widget(WDatePicker::className(), [
+        'dateFormat' => 'yyyy-MM-dd HH:mm:ss',
+        'readOnly' => true
     ]) ?>
-	
+
     <?= $form->field($model, 'action_type')->dropDownList(
         AdminLog::getActionType(),
         ['prompt'=>'选择事件类型']
