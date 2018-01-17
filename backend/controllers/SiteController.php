@@ -101,7 +101,7 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
                 'minLength' => 4,
-                'maxLength' => 4,
+                'maxLength' => 6,
                 'offset' => 3,
             ],
         ];
