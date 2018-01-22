@@ -128,7 +128,8 @@ return [
             //这里是允许访问的action //控制器内优先级高于此处
             'site/captcha',
             'site/logout',
-            'site/login'
+            'site/login',
+            'site/formatter-test'
             //'*'  #初始测试用
         ]
     ],

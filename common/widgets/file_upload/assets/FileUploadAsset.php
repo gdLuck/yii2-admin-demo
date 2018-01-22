@@ -4,14 +4,10 @@ namespace common\widgets\file_upload\assets;
 use Yii;
 use yii\web\AssetBundle;
 
-/**
- * @author Xianan Huang <xianan_huang@163.com>
- */
 class FileUploadAsset extends AssetBundle
 {
     public $css = [
         'css/upload.css',
-        
     ];
     
     public $js = [

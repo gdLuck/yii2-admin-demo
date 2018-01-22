@@ -63,7 +63,31 @@ div.required label:after {
             ]
         ]); ?>
 
-    <?= $form->field($model, 'game_intro')->textarea(['rows' => 6]) ?>
+    <!-- 编辑器 -->
+    <?= $form->field($model,'game_intro',[
+        'enableClientValidation'=> false,
+	    'enableAjaxValidation'=> false,
+	    'template' => "{label}\n<div class=\"col-lg-6\">{input}</div>\n{hint}\n<div class=\"col-lg-8\">{error}</div>",
+	])->widget('common\widgets\ueditor\UEditor',[
+        'clientOptions' => [
+            //编辑区域大小
+            'initialFrameHeight' => '150',
+            //设置语言
+            'lang' =>'zh-cn', //中文为 zh-cn
+            //定制菜单
+            /*'toolbars' => [
+                [
+                    'fullscreen', 'source', 'undo', 'redo', '|',
+                    'fontsize',
+                    'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'removeformat',
+                    'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|',
+                    'forecolor', 'backcolor', '|',
+                    'lineheight', '|',
+                    'indent', '|'
+                ],
+            ]*/
+          ]
+        ]) ?>
 
     <?= $form->field($model, 'game_sort')->textInput(['class'=> 'col-lg-6']) ?>
 

@@ -50,8 +50,6 @@ class WDatePicker extends InputWidget
      */
     public $attribute;
 
-    public $value;
-
     /* 是否只读(手动输入) */
     public $readOnly = false;
 

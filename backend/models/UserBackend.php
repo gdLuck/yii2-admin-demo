@@ -77,7 +77,7 @@ class UserBackend extends ARUser implements IdentityInterface
             'auth_key' => 'Auth Key',
             'password_hash' => '密码',
             'email' => '邮箱',
-            'created_at' => 'Created At',
+            'created_at' => '注册时间',
             'updated_at' => '最新更新时间',
         ];
     }

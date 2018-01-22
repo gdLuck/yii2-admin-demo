@@ -45,6 +45,14 @@ class GameBasicInfoController extends baseControllers
                     'imageMaxSize' => '1000000', //限制1M
                     'uploadPath' => yii::$app->params['uploadPath'],
                 ]
+            ],
+            'ueditor-upload'=>[
+                'class' => '\common\widgets\ueditor\UEditorAction',  //百度编辑器 上传用
+                'config' => [
+                    "imageUrlPrefix"  => "",//图片访问路径前缀
+                    "imagePathFormat" => yii::$app->params['uploadPath']."/image/ueditor/{yyyy}{mm}{dd}/{time}{rand:6}", //上传保存路径
+                    "imageRoot" => Yii::getAlias("@webroot")
+                ]
             ]
         ];
     }
