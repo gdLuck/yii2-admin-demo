@@ -41,3 +41,7 @@ phpunit.phar
 /backend/web/uploads/image
 /backend/web/uploads/images
 /composer.lock
+/frontend/config/main-prod.php
+/common/config/db-prod.php
+/common/config/main-prod.php
+/backend/config/main-prod.php
