@@ -51,13 +51,13 @@ div.required label:after {
 
     <?= $form->field($model, 'game_alias')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'game_logo')->widget('common\widgets\file_upload\fileUpload',[
+    <?= $form->field($model, 'game_logo')->widget('common\widgets\file_upload\FileUpload',[
             'config'=>[
                 'isCdn'=> true,
             ]
         ]); ?>
             
-    <?= $form->field($model, 'game_head_img')->widget('common\widgets\file_upload\fileUpload',[
+    <?= $form->field($model, 'game_head_img')->widget('common\widgets\file_upload\FileUpload',[
             'config'=>[
                 'isCdn'=> false,
             ]
