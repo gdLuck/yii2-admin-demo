@@ -16,6 +16,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     
     'bootstrap' => ['log'],
+
     'modules' => [
         "admin" => [
             "class" => 'mdm\admin\Module',#引用别名  用于yii2-admin/rbac配置
@@ -86,6 +87,30 @@ return [
 //                         'subject' => 'Database errors at example.com',
 //                     ],
 //                 ],
+            ],
+        ],
+        //添加 模版引擎配置
+        'view' => [
+            'class' => 'yii\web\View',
+            'renderers' => [
+                'tpl' => [
+                    'class' => 'yii\smarty\ViewRenderer',
+                    //'cachePath' => '@runtime/Smarty/cache',
+                ],
+                'twig' => [
+                    'class' => 'yii\twig\ViewRenderer',
+                    'cachePath' => '@runtime/Twig/cache',
+                    // Array of twig options:
+                    'options' => [
+                        'auto_reload' => true,
+                    ],
+                    'globals' => [
+                        'Url' => ['class' => '\yii\helpers\Url'],
+                        'Html' => ['class' => '\yii\helpers\Html'],
+                    ],
+                    'uses' => ['yii\bootstrap'],
+                ],
+                // ...
             ],
         ],
         'errorHandler' => [

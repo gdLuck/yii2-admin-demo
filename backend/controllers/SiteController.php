@@ -197,9 +197,12 @@ class SiteController extends Controller
             $model->modelLogRecord($model, AdminLog::ACTION_TYPE_LOGIN);
             return $this->goBack();
         } else {
-            return $this->render('login', [
+            /*return $this->render('login', [
                 'model' => $model,
-            ]);
+            ]);*/
+
+            // 使用twig模版引擎写法
+            return $this->render('login.twig', ['model' => $model]);
         }
     }
 

@@ -1,0 +1,85 @@
+{#
+ @var $this yii\web\View
+ @var $form yii\bootstrap\ActiveForm
+ @var $model \common\models\LoginForm
+
+ 详见：https://github.com/yiisoft/yii2-twig/tree/master/docs/guide
+
+ 注：匿名函数在控制器定义成变量传进来
+ 规则：
+ _begin, _end and _widget  会转为： ::begin(), ::end() and ::widget()
+ NavBar 变为 nav_bar ，Nav 转为 nav
+ 数组转成 JSON 格式
+#}
+
+{{ use('yii\bootstrap\ActiveForm') }}
+{{ use('yii\captcha\Captcha') }}
+{{ use('yii\helpers\VarDumper') }}
+
+{{ set(this, 'title', '后台登录') }}
+
+{% set fieldOptions1 = {
+        'options' : {'class' : 'form-group has-feedback'},
+        'inputTemplate' : "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
+    }
+%}
+
+{% set fieldOptions2 = {
+        'options' : {'class' : 'form-group has-feedback'},
+        'inputTemplate' : "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
+    }
+%}
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href="#"><b>Admin</b>LTE</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">登录</p>
+
+        {#'options' : {'class' : 'form-horizontal'},#}
+        {% set form = active_form_begin({
+            'id' : 'login-form',
+            'enableClientValidation' : false,
+        }) %}
+
+        {{ form.field(model, 'username', fieldOptions1).label(false).textInput({
+            'placeholder' : model.getAttributeLabel('username')
+        }) | raw }}
+
+        {{ form.field(model, 'password', fieldOptions2).label(false).passwordInput({
+            'placeholder' : model.getAttributeLabel('password')
+        }) | raw }}
+
+        {{ form.field(model, 'verifyCode').widget('\\yii\\captcha\\Captcha', {
+            'template' : '<div class="row"><div class="col-lg-4">{image}</div><div class="col-lg-6">{input}</div></div>'
+        }) |raw }}
+
+        <div class="row">
+            <div class="col-xs-8">
+                {{ form.field(model, 'rememberMe').checkbox() |raw  }}
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-4">
+                {{ Html.tag('button', '登录', {'class' : 'btn btn-primary btn-block btn-flat', 'name' : 'login-button'}) |raw }}
+            </div>
+            <!-- /.col -->
+        </div>
+
+        {{ active_form_end() }}
+
+        <!-- <div class="social-auth-links text-center">
+            <p>- OR -</p>
+            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
+                using Facebook</a>
+            <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
+                in using Google+</a>
+        </div> -->
+        <!-- /.social-auth-links -->
+
+        <a href="#">忘记密码</a><br>
+
+    </div>
+    <!-- /.login-box-body -->
+</div><!-- /.login-box -->
