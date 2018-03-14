@@ -10,7 +10,11 @@ return [
     #'enableSchemaCache' => true,#若数据库有变动要关闭更新以缓存
     #'schemaCacheDuration' => 24*3600,
     #'schemaCache' => 'cache',
-    
+    // 添加初始化语句
+//    'on afterOpen' => function($event) {
+//        // $event->sender refers to the DB connection
+//        $event->sender->createCommand("SET time_zone = 'UTC'")->execute();
+//    }
     
     // 从库的通用配置
 //     'slaveConfig' => [
